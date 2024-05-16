@@ -1,0 +1,46 @@
+@mixin overlay_bg($opacity) {
+  background-color: rgb(255, 255, 255, $opacity);
+}
+
+.Overlay {
+  width: 100%;
+  height: 100%;
+  @include overlay_bg(0.92);
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: none;
+  place-items: center;
+
+  &.visible {
+    display: grid;
+  }
+}
+
+.Spinner,
+.SpinnerMask {
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+.Spinner {
+  $clr1: blue;
+  $clr2: yellow;
+  width: min(90%, 125px);
+  background-image: conic-gradient($clr2 7.5%, $clr1 0);
+  display: grid;
+  place-items: center;
+  animation: rotation 1s linear infinite;
+}
+
+.SpinnerMask {
+  width: 85%;
+  @include overlay_bg(1);
+}
+
+@keyframes rotation {
+  to {
+    transform: rotate(1turn);
+  }
+}
