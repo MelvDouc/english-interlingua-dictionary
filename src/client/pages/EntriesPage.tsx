@@ -1,6 +1,7 @@
 import EntryCard from "$components/EntryCard/EntryCard.jsx";
 import NextEntryLink from "$components/NextEntryLink/NextEntryLink.jsx";
 import { getEntries } from "$client/utils/api.js";
+import auth from "$client/utils/auth.js";
 
 export default async function EntriesPage({ word }: {
   word: string;
@@ -12,8 +13,6 @@ export default async function EntriesPage({ word }: {
       <p>No entries found for <strong>{word}</strong>.</p>
     );
 
-  const nextEntryLink = await NextEntryLink({ word });
-
   return (
     <>
       <h1>{word}</h1>
@@ -22,9 +21,9 @@ export default async function EntriesPage({ word }: {
           <EntryCard entry={entry} />
         </div>
       ))}
-      <div className="mt-4">
-        <span>Next:&nbsp;</span>{nextEntryLink}
-      </div>
+      {auth.isModOrMore() && (
+        <p>Next: {await NextEntryLink({ word })}</p>
+      )}
     </>
   );
 }

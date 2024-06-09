@@ -1,4 +1,5 @@
 import router from "$client/utils/router.js";
+import "css.gg/icons/css/search.css";
 
 export default function SearchForm() {
   return (
@@ -11,7 +12,9 @@ export default function SearchForm() {
         aria-label="Search"
         required
       />
-      <button className="btn btn-light btn-outline-success" type="submit">Search</button>
+      <button className="btn btn-light btn-outline-success" type="submit">
+        <i className="gg-search"></i>
+      </button>
     </form>
   );
 }

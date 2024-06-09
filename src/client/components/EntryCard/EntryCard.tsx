@@ -28,10 +28,12 @@ export default function EntryCard({ entry }: {
           </li>
         ))}
       </ul>
-      {auth.isAdmin() && (
+      {auth.isModOrMore() && (
         <div className="d-flex gap-2">
           <RouterLink href={`/entry/update/${entry.id}`} className="btn btn-primary">Update</RouterLink>
-          <DeleteEntryButton id={entry.id} onDeleteSuccessful={() => card.remove()} />
+          {auth.isAdmin() && (
+            <DeleteEntryButton id={entry.id} onDeleteSuccessful={() => card.remove()} />
+          )}
         </div>
       )}
     </div>

@@ -18,7 +18,6 @@ export default function TranslationListItem({ translation: trl, moveTranslationU
         removeTranslation={removeTranslation}
       />
       <p className="d-flex gap-1">
-        <BoundInput src={trl} key="pronunciation" placeholder="Pronunciation" />
         <BoundInput src={trl} key="detail" placeholder="Detail" />
       </p>
       <h4>Examples <Button color="success" click={addExample}>Add</Button></h4>

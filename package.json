@@ -1,5 +1,5 @@
 {
-  "name": "vite-typescript-starter",
+  "name": "english-interlingua-dictionary",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,6 +17,7 @@
     "@types/node": "^20.12.12",
     "bootstrap": "^5.3.3",
     "client-side-router": "^1.0.3",
+    "css.gg": "^2.1.1",
     "nodemon": "^3.0.1",
     "reactfree-jsx": "^1.6.1",
     "sass": "^1.77.1",
