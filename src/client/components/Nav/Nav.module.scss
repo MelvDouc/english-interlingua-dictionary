@@ -1,5 +1,57 @@
 .Nav {
+  $clr1: rgb(100, 45, 245);
+  background: $clr1;
+  background: linear-gradient(to right, #4A00E0, $clr1);
+
+  section {
+    padding: 0.5em;
+  }
+
   a {
     color: white !important;
+    text-decoration: none;
+  }
+}
+
+.NavTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5em;
+
+  h1 {
+    margin: 0;
+  }
+
+  form {
+    flex-grow: 1;
+    display: flex;
+    gap: 0.45em;
+  }
+}
+
+.NavBottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.NavBottomLeft {
+  display: flex;
+  align-items: center;
+
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin: 0;
+    padding: 0;
+
+    @media only screen and (width < 400px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }

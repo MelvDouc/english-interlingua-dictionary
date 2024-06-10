@@ -3,9 +3,9 @@ import "css.gg/icons/css/search.css";
 
 export default function SearchForm() {
   return (
-    <form className="d-flex" onsubmit={handleSubmit}>
+    <form onsubmit={handleSubmit}>
       <input
-        className="form-control me-2 w-100"
+        className="form-control"
         type="search"
         name="word"
         placeholder="Search..."

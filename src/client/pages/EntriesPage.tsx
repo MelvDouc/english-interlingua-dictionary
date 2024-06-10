@@ -22,6 +22,7 @@ export default async function EntriesPage({ word }: {
           <EntryCard entry={entry} />
         </div>
       ))}
+      <hr />
       {prev && (
         <p>Previous: <RouterLink href={`/entries/${prev}`}>{prev}</RouterLink></p>
       )}

@@ -8,49 +8,34 @@ import "css.gg/icons/css/math-plus.css";
 
 export default function Nav() {
   return (
-    <nav className={`${cssClasses.Nav} navbar navbar-expand-lg p-2 bg-primary bg-gradient`}>
-      <div className="container-fluid">
-        <RouterLink className="navbar-brand" href="/">EN-IA Dictionary</RouterLink>
+    <nav className={cssClasses.Nav}>
+      <section className={cssClasses.NavTop}>
+        <h1><RouterLink href="/" title="Home">EN-IA Dictionary</RouterLink></h1>
         <SearchForm />
-        <Links />
-      </div>
+      </section>
+      <section className={cssClasses.NavBottom}>
+        <article className={`${cssClasses.NavBottomLeft}`}>
+          <ul>
+            <li><RouterLink href="/all-entries" title="All entries">All</RouterLink></li>
+            <li><RandomEntryLink /></li>
+            <AddEntryLi />
+          </ul>
+        </article>
+        <article className={`${cssClasses.NavBottomRight}`}>
+          <AuthLinks />
+        </article>
+      </section>
     </nav>
   );
 }
 
-function Links() {
-  return (
-    <>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarText">
-        <ul className="navbar-nav justify-content-end align-items-center w-100">
-          <li className="nav-item">
-            <RouterLink className="nav-link" href="/all-entries" title="All entries">All</RouterLink>
-          </li>
-          <li className="nav-item">
-            <RandomEntryLink />
-          </li>
-          <AddEntryLink />
-          <li className="nav-item">
-            <AuthLinks />
-          </li>
-        </ul>
-      </div>
-    </>
-  );
-}
-
-function AddEntryLink() {
+function AddEntryLi() {
   if (!auth.isModOrMore())
     return null;
 
   return (
-    <li className="nav-item">
-      <RouterLink className="nav-link" href="/entry/add" title="Add entry">
-        <i className="gg-math-plus"></i>
-      </RouterLink>
+    <li>
+      <RouterLink href="/entry/add" title="Add entry">Add Entry</RouterLink>
     </li>
   );
 }
@@ -63,9 +48,9 @@ function AuthLinks() {
 
   return (
     <div className="d-flex align-items-center gap-1 text-light">
-      <RouterLink className="nav-link" href="/log-in">Log in</RouterLink>
+      <RouterLink href="/log-in">Log in</RouterLink>
       /
-      <RouterLink className="nav-link" href="/sign-up">Sign up</RouterLink>
+      <RouterLink href="/sign-up">Sign up</RouterLink>
     </div>
   );
 }
