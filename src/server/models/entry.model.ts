@@ -1,12 +1,6 @@
 import { z } from "zod";
 import { entryCollection, ObjectId, type WithId } from "$server/core/db.js";
-import type { Entry } from "$server/types.js";
-
-const COLLATION = {
-  collation: {
-    locale: "en"
-  }
-};
+import type { Entry, SerializableEntry } from "$server/types.js";
 
 const exampleSchema = z
   .object({
@@ -28,43 +22,26 @@ const entrySchema = z.object({
 });
 
 function findEntryWords() {
-  return entryCollection.distinct("word", {}, COLLATION);
+  return entryCollection.distinct("word", {}, {
+    collation: { locale: "en" }
+  });
 }
 
-function findEntryByWord(word: string) {
-  return entryCollection
+async function findEntriesByWord(word: string) {
+  const entries = await entryCollection
     .find({ word })
     .map(makeEntrySerializable)
     .toArray();
+  const words = (await findEntryWords());
+  const index = words.indexOf(word);
+  const prev = index > 0 ? words[index - 1] : null;
+  const next = index < words.length - 1 && index !== -1 ? words[index + 1] : null;
+  return { entries, prev, next };
 }
 
 async function findEntryById(id: string) {
   try {
     const entity = await entryCollection.findOne({ _id: new ObjectId(id) });
-    return entity
-      ? makeEntrySerializable(entity)
-      : null;
-  } catch (error) {
-    return null;
-  }
-}
-
-async function findNextEntryByWord(word: string) {
-  try {
-    const entity = await entryCollection
-      .aggregate(
-        [
-          {
-            $match: {
-              word: { $gt: word }
-            }
-          },
-          { $sort: { word: 1 } },
-          { $limit: 1 }
-        ],
-        COLLATION
-      )
-      .tryNext() as WithId<Entry> | null;
     return entity
       ? makeEntrySerializable(entity)
       : null;
@@ -79,7 +56,8 @@ function findRandomEntry() {
       {
         $sample: { size: 1 }
       }
-    ]).tryNext();
+    ])
+    .tryNext();
 }
 
 async function createEntry(entry: Entry) {
@@ -113,16 +91,15 @@ async function deleteEntry(id: string) {
   }
 }
 
-function makeEntrySerializable({ _id, ...entry }: WithId<Entry>) {
+function makeEntrySerializable({ _id, ...entry }: WithId<Entry>): SerializableEntry {
   return { ...entry, id: _id.toHexString() };
 }
 
 export default {
   findEntryWords,
-  findEntryByWord,
+  findEntriesByWord,
   findRandomEntry,
   findEntryById,
-  findNextEntryByWord,
   createEntry,
   replaceEntry,
   deleteEntry,

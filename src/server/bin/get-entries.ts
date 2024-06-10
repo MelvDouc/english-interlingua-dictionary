@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { WORD_CLASSES } from "$src/word-classes.js";
+import WORD_CLASSES from "$src/word-classes.js";
 import scanner from "$server/bin/scanner.js";
 import type { Entry, WordClass, Example, Translation } from "$server/types.js";
 

@@ -1,9 +1,9 @@
 import api from "$client/utils/api.js";
-import router from "$client/utils/router.js";
+import { setAuthToken } from "$client/utils/local-storage.js";
 import BoundInput from "$components/BoundInput/BoundInput.jsx";
 import Button from "$components/Button/Button.jsx";
 
-export default function SignUpForm() {
+export default function LogInForm() {
   const { data, handleSubmit } = getHandler();
 
   return (
@@ -44,7 +44,7 @@ function getHandler() {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    const [response, error] = await api<{ error: unknown; }>("/auth/log-in", {
+    const [authToken, error] = await api<string | null>("/auth/log-in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -52,17 +52,18 @@ function getHandler() {
       body: JSON.stringify(data)
     });
 
-    if (!response) {
-      alert(JSON.stringify(error));
+    if (error) {
+      console.log(error);
       return;
     }
 
-    if (response.error !== null) {
-      alert(JSON.stringify(response.error));
+    if (!authToken) {
+      console.log("Invalid credentials.");
       return;
     }
 
-    router.navigate("/");
+    setAuthToken(authToken);
+    location.assign("/");
   };
 
   return { data, handleSubmit };

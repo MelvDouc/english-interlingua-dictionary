@@ -32,30 +32,40 @@ function Links() {
           <li className="nav-item">
             <RandomEntryLink />
           </li>
-          {auth.map(() => (
-            auth.isModOrMore() && (
-              <li className="nav-item">
-                <RouterLink className="nav-link" href="/entry/add" title="Add entry">
-                  <i className="gg-math-plus"></i>
-                </RouterLink>
-              </li>
-            )
-          ))}
+          <AddEntryLink />
           <li className="nav-item">
-            {auth.map((user) => (
-              user
-                ? (<LogOutButton />)
-                : (
-                  <div className="d-flex align-items-center gap-1 text-light">
-                    <RouterLink className="nav-link" href="/log-in">Log in</RouterLink>
-                    /
-                    <RouterLink className="nav-link" href="/sign-up">Sign up</RouterLink>
-                  </div>
-                )
-            ))}
+            <AuthLinks />
           </li>
         </ul>
       </div>
     </>
+  );
+}
+
+function AddEntryLink() {
+  if (!auth.isModOrMore())
+    return null;
+
+  return (
+    <li className="nav-item">
+      <RouterLink className="nav-link" href="/entry/add" title="Add entry">
+        <i className="gg-math-plus"></i>
+      </RouterLink>
+    </li>
+  );
+}
+
+function AuthLinks() {
+  if (auth.isLoggedIn())
+    return (
+      <LogOutButton />
+    );
+
+  return (
+    <div className="d-flex align-items-center gap-1 text-light">
+      <RouterLink className="nav-link" href="/log-in">Log in</RouterLink>
+      /
+      <RouterLink className="nav-link" href="/sign-up">Sign up</RouterLink>
+    </div>
   );
 }

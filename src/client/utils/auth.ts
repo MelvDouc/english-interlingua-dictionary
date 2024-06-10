@@ -1,24 +1,24 @@
-import { obs } from "reactfree-jsx";
 import api from "$client/utils/api.js";
-import router from "$client/utils/router.js";
+import { getAuthToken } from "$client/utils/local-storage.js";
 import type { PublicUser } from "$client/types.js";
 
-const authObs = obs<PublicUser | null>();
+const user = await fetchUser();
 
-router.onNavigationStarted(async () => {
-  const [authData, error] = await api<PublicUser | null>("/auth/check-log-in");
-  console.log({ authData });
-  if (error) console.log(error);
-  authObs.value = authData;
-});
+async function fetchUser() {
+  const token = getAuthToken();
+
+  if (!token)
+    return null;
+
+  const [user] = await api<PublicUser | null>("/auth/get-credentials");
+  return user;
+}
 
 export default {
-  isLoggedIn: () => authObs.value !== null,
+  isLoggedIn: () => !!user,
   isModOrMore: () => {
-    const role = authObs.value?.role;
+    const role = user?.role;
     return role === "MODERATOR" || role === "ADMIN";
   },
-  isAdmin: () => authObs.value?.role === "ADMIN",
-  map: authObs.map.bind(authObs),
-  subscribe: authObs.subscribe.bind(authObs),
+  isAdmin: () => user?.role === "ADMIN"
 };

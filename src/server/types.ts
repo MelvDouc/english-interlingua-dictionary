@@ -2,6 +2,7 @@ import type {
   Entry,
   Example,
   PublicUser,
+  SerializableEntry,
   Translation,
   UserRole,
   WordClass
@@ -11,6 +12,12 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       readonly JWT_SECRET: string;
+    }
+  }
+
+  namespace Express {
+    interface Locals {
+      user?: PublicUser;
     }
   }
 }
@@ -31,6 +38,7 @@ export type {
   Entry,
   Example,
   PublicUser,
+  SerializableEntry,
   Translation,
   UserRole,
   User,

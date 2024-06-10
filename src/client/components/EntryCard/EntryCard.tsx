@@ -6,8 +6,6 @@ import type { Example, SerializableEntry } from "$client/types.js";
 export default function EntryCard({ entry }: {
   entry: SerializableEntry;
 }) {
-  const lsKey = `entry_${entry.id}`;
-  localStorage.setItem(lsKey, JSON.stringify(entry));
   let card: HTMLElement;
 
   return card = (

@@ -12,12 +12,6 @@ const getEntryById = async (req: Request, res: Response) => {
   return res.json(entry);
 };
 
-const getNextEntryByWord = async (req: Request, res: Response) => {
-  const { word } = req.params;
-  const entry = await entryModel.findNextEntryByWord(word);
-  return res.json(entry);
-};
-
 const getRandomEntryWord = async (_: Request, res: Response) => {
   const entry = await entryModel.findRandomEntry();
   return res.json(entry?.word);
@@ -25,8 +19,8 @@ const getRandomEntryWord = async (_: Request, res: Response) => {
 
 const getEntriesByWord = async (req: Request, res: Response) => {
   const word = req.params.word;
-  const entries = await entryModel.findEntryByWord(word);
-  res.json(entries);
+  const result = await entryModel.findEntriesByWord(word);
+  res.json(result);
 };
 
 const addEntry = async (req: Request, res: Response) => {
@@ -51,7 +45,6 @@ const deleteEntry = async (req: Request, res: Response) => {
 export default {
   getWords,
   getEntryById,
-  getNextEntryByWord,
   getEntriesByWord,
   getRandomEntryWord,
   addEntry,

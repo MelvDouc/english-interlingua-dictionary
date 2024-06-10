@@ -1,7 +1,7 @@
+import bcryptjs from "bcryptjs";
 import { z } from "zod";
 import { userCollection } from "$server/core/db.js";
 import type { User } from "$server/types.js";
-import bcryptjs from "bcryptjs";
 
 const userSchema = z.object({
   email: z.string().email(),

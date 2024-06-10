@@ -1,4 +1,4 @@
-import api from "$client/utils/api.js";
+import { removeAuthToken } from "$client/utils/local-storage.js";
 import Button from "$components/Button/Button.jsx";
 import "css.gg/icons/css/arrow-right.css";
 
@@ -10,9 +10,9 @@ export default function LogOutButton() {
   );
 }
 
-async function logOut() {
+function logOut() {
   if (confirm("Are you sure you want to log out?")) {
-    await api("/auth/log-out", { method: "DELETE" });
+    removeAuthToken();
     location.assign("/");
   }
 }

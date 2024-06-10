@@ -36,6 +36,10 @@ interface Entry {
   };
 }
 
+interface SerializableEntry extends Entry {
+  readonly id: string;
+}
+
 // ===== ===== ===== ===== =====
 // EXPORTS
 // ===== ===== ===== ===== =====
@@ -44,6 +48,7 @@ export type {
   Entry,
   Example,
   PublicUser,
+  SerializableEntry,
   Translation,
   UserRole,
   WordClass

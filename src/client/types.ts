@@ -2,6 +2,7 @@ import type {
   Entry,
   Example,
   PublicUser,
+  SerializableEntry,
   Translation,
   UserRole,
   WordClass
@@ -10,14 +11,6 @@ import { type obs } from "reactfree-jsx";
 
 type Obs<T> = ReturnType<typeof obs<T>>;
 type SafeResponse<T, Err> = [T, null] | [null, Err];
-
-// ===== ===== ===== ===== =====
-// ENTITY
-// ===== ===== ===== ===== =====
-
-interface SerializableEntry extends Entry {
-  readonly id: string;
-}
 
 // ===== ===== ===== ===== =====
 // EXPORTS
