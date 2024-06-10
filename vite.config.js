@@ -5,6 +5,9 @@ const root = process.cwd();
 const srcDir = join(root, "src");
 
 export default defineConfig({
+  build: {
+    target: "ES2022"
+  },
   esbuild: {
     jsxFactory: "h",
     jsxFragment: "Fragment",
